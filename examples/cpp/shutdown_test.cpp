@@ -23,6 +23,7 @@ int main() {
 
   sleep(1);
   t.detach();
+  mx::metal::begin_shutdown();
   std::cout << "Main thread exiting." << std::endl;
   return 0;
 }
