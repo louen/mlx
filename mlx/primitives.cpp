@@ -1789,7 +1789,9 @@ std::pair<std::vector<array>, std::vector<int>> Divide::vmap(
     const std::vector<array>& inputs,
     const std::vector<int>& axes) {
   auto [a, b, to_ax] = vmap_binary_op(inputs, axes, stream());
-  return {{divide(a, b, stream())}, {to_ax}};
+  auto out = issubdtype(a.dtype(), integer) ? floor_divide(a, b, stream())
+                                            : divide(a, b, stream());
+  return {{out}, {to_ax}};
 }
 
 std::vector<array> Remainder::vjp(
