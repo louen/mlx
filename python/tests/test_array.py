@@ -1782,6 +1782,15 @@ class TestArray(mlx_tests.MLXTestCase):
         a_np = None
         self.assertIsNone(wr())
 
+    def test_create_from_buffer(self):
+        x = mx.array(b"Hello")
+        self.assertEqual(x.dtype, mx.uint8)
+        self.assertEqual(x.tolist(), [72, 101, 108, 108, 111])
+
+        x = mx.array(bytearray([1, 2, 3]))
+        self.assertEqual(x.dtype, mx.uint8)
+        self.assertEqual(x.tolist(), [1, 2, 3])
+
     @unittest.skipIf(not has_tf, "requires TensorFlow")
     def test_buffer_protocol_tf(self):
         dtypes_list = [
